@@ -23,8 +23,16 @@ class Workspace extends Component {
                         <Undo id="undo-button" className="list-item-control material-icons todo-button" />
                         <Redo id="redo-button" className="list-item-control material-icons todo-button" />
                         <AddBox id="add-item-button" className="list-item-control material-icons todo-button" />
-                        <Delete id="delete-list-button" className="list-item-control material-icons todo-button" />
-                        <Close id="close-list-button" className="list-item-control material-icons todo-button" />
+                        <Delete 
+                            id="delete-list-button" 
+                            className="list-item-control material-icons todo-button" 
+                            onClick={this.props.openDeleteListModal}
+                        />
+                        <Close 
+                            id="close-list-button" 
+                            className="list-item-control material-icons todo-button" 
+                            onClick={this.props.closeCurrentList}
+                        />
                     </div>
                 </div>
                 <div id="todo-list-items-div">

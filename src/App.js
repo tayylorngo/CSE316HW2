@@ -7,6 +7,7 @@ import jsTPS from './common/jsTPS'
 import Navbar from './components/Navbar'
 import LeftSidebar from './components/LeftSidebar'
 import Workspace from './components/Workspace'
+import DeleteListModal from './components/DeleteListModal/DeleteListModal'
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -53,7 +54,8 @@ class App extends Component {
       nextListId: highListId+1,
       nextListItemId: highListItemId+1,
       useVerboseFeedback: true,
-      listLoaded: false
+      listLoaded: false,
+      deletingList: false
     }
   }
 
@@ -115,6 +117,26 @@ class App extends Component {
     localStorage.setItem("recent_work", toDoListsString);
   }
 
+  openDeleteListModal = () => {
+      this.setState({deletingList: true});
+  }
+
+  closeDeleteListModal = () => {
+    this.setState({deletingList: false});
+  }
+
+  deleteList = () => {
+
+
+  }
+
+  closeCurrentList = () => {
+    this.setState({
+      currentList: {items: []},
+      listLoaded: false
+    })
+  }
+
   render() {
     let items = this.state.currentList.items;
     return (
@@ -126,8 +148,16 @@ class App extends Component {
           addNewListCallback={this.addNewList}
           loadedList={this.state.listLoaded}
         />
-        <Workspace toDoListItems={items} />
-      </div>
+        <Workspace 
+          toDoListItems={items} 
+          openDeleteListModal={this.openDeleteListModal}
+          closeCurrentList={this.closeCurrentList}
+        />
+        {this.state.deletingList ? 
+        <DeleteListModal
+          closeModal={this.closeDeleteListModal}
+        /> : null}
+=      </div>
     );
   }
 }
