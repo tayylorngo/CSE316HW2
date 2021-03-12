@@ -27,9 +27,9 @@ class ToDoItem extends Component {
 
         return (
             <div id={'todo-list-item-' + listItem.id} className='list-item-card'>
-                <div className='item-col task-col'>{listItem.description}</div>
-                <div className='item-col due-date-col'>{listItem.due_date}</div>
-                <div className='item-col status-col' className={statusType}>{listItem.status}</div>
+                <div className='item-col task-col'><h4>{listItem.description}</h4></div>
+                <div className='item-col due-date-col'><h4>{listItem.due_date}</h4></div>
+                <div className='item-col status-col'><h4 className={statusType}>{listItem.status}</h4></div>
                 <div className='item-col test-4-col'></div>
                 <div className='item-col list-controls-col'>
                     <KeyboardArrowUp className='list-item-control todo-button' />

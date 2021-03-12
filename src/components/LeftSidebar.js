@@ -43,6 +43,7 @@ class LeftSidebar extends Component {
                                 toDoList={toDoList}                               
                                 loadToDoListCallback={this.props.loadToDoListCallback} 
                                 currentList = {true}
+                                changeListName={this.props.changeListName}
                             />);
                         }
                         else{

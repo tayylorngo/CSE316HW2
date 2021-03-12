@@ -4,9 +4,12 @@ import React, { Component } from 'react'
 class ListLink extends Component {
     constructor(props) {
         super(props);
-        
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tListLink " + this.props.toDoList.key + " constructor");
+    }
+
+    state = {
+        editingListName: false
     }
 
     componentDidMount = () => {
@@ -18,19 +21,62 @@ class ListLink extends Component {
         this.props.loadToDoListCallback(this.props.toDoList);
     }
 
-    render() {
-        // DISPLAY WHERE WE ARE
-        console.log("\t\t\tListLink render");
-        let listName = <h4>{this.props.toDoList.name}</h4>;
+    handleListClick = (event) => {
+        event.preventDefault();
+        if(event.detail === 1 && !this.props.currentList){
+            this.handleLoadList();
+        }
+        else if(event.detail === 2){
+            this.setState(
+                {editingListName: true}
+            );
+        }
+    }
 
+    handleListNameChange = (event) => {
+        this.props.changeListName(event.target.value);
+        this.setState({
+            editingListName: false
+        });
+    }
+
+    render() {
+        let nameOfList = this.props.toDoList.name;
+        let listName = <h4>{nameOfList}</h4>;
         if(this.props.currentList){
             listName = <h4 style={{color: "#ffc800"}}>{this.props.toDoList.name}</h4>
         }
+        let inputStyle = {
+            display: "none"
+        }
+
+        if(this.state.editingListName){
+            inputStyle.display = "block";
+            listName = null;
+            console.log(this.listName);
+            this.listName.focus();
+        }
+
+        // DISPLAY WHERE WE ARE
+        console.log("\t\t\tListLink render");
         return (
             <div 
                 className='todo-list-button'
-                onClick={this.handleLoadList}
+                onClick={this.handleListClick}
             >
+                <input 
+                    type="text" 
+                    style={inputStyle}
+                    onBlur={this.handleListNameChange}
+                    defaultValue={nameOfList}
+                    ref={(input) => {
+                        this.listName = input;
+                        if(this.listName){
+                            this.listName.focus();
+                        }
+                    }}
+                >
+                </input>
                 {listName}
                 <br />
             </div>

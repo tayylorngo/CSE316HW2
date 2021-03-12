@@ -118,11 +118,11 @@ class App extends Component {
   }
 
   openDeleteListModal = () => {
-      this.setState({deletingList: true});
+      this.setState({deletingList: true}, this.afterToDoListsChangeComplete);
   }
 
   closeDeleteListModal = () => {
-    this.setState({deletingList: false});
+    this.setState({deletingList: false}, this.afterToDoListsChangeComplete);
   }
 
   deleteList = () => {
@@ -130,10 +130,10 @@ class App extends Component {
       newToDoLists = newToDoLists.slice(1);
       this.setState({
         toDoLists: newToDoLists,
-        currentList: {items: []}
-        }
+        currentList: {items: []},
+        listLoaded: false
+        }, this.afterToDoListsChangeComplete
       );
-      this.closeCurrentList();
       this.closeDeleteListModal();
   }
 
@@ -144,8 +144,17 @@ class App extends Component {
     })
   }
 
+  changeListName = (newName) => {
+      let newToDoLists = this.state.toDoLists;
+      newToDoLists[0].name = newName;
+      this.setState({
+        toDoLists: newToDoLists,
+      }, this.afterToDoListsChangeComplete);
+  }
+
   render() {
     let items = this.state.currentList.items;
+    let transactionStackSize = this.tps.getSize();
     return (
       <div id="root">
         <Navbar />
@@ -154,12 +163,14 @@ class App extends Component {
           loadToDoListCallback={this.loadToDoList}
           addNewListCallback={this.addNewList}
           loadedList={this.state.listLoaded}
+          changeListName={this.changeListName}
         />
         <Workspace 
           toDoListItems={items} 
           openDeleteListModal={this.openDeleteListModal}
           closeCurrentList={this.closeCurrentList}
           loadedList={this.state.listLoaded}
+          transactionSize={transactionStackSize}
         />
         {this.state.deletingList ? 
         <DeleteListModal
