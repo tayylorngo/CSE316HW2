@@ -126,8 +126,15 @@ class App extends Component {
   }
 
   deleteList = () => {
-
-
+      let newToDoLists = this.state.toDoLists;
+      newToDoLists = newToDoLists.slice(1);
+      this.setState({
+        toDoLists: newToDoLists,
+        currentList: {items: []}
+        }
+      );
+      this.closeCurrentList();
+      this.closeDeleteListModal();
   }
 
   closeCurrentList = () => {
@@ -157,6 +164,7 @@ class App extends Component {
         {this.state.deletingList ? 
         <DeleteListModal
           closeModal={this.closeDeleteListModal}
+          deleteListFunction={this.deleteList}
         /> : null}
 =      </div>
     );

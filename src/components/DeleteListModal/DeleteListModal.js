@@ -14,7 +14,7 @@ class DeleteListModal extends Component{
                         </div>
                     </div>
                     <div class="modal-header">
-                        <div class="modal-button" id="confirmDeleteList-button">
+                        <div class="modal-button" id="confirmDeleteList-button" onClick={this.props.deleteListFunction}>
                             Confirm
                         </div>
                         <div class="modal-button deleteList" id="cancelDeleteList-button" onClick={this.props.closeModal}>
