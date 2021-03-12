@@ -27,7 +27,7 @@ class LeftSidebar extends Component {
                 <div id="todo-lists-list">
                 {
                     this.props.toDoLists.map((toDoList, index) => {
-                        if(index === 0 && this.props.loadedList.length !== 0){
+                        if(index === 0 && this.props.loadedList){
                             return (
                             <ListLink
                                 key={toDoList.id}

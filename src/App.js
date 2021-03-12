@@ -52,7 +52,8 @@ class App extends Component {
       currentList: {items: []},
       nextListId: highListId+1,
       nextListItemId: highListItemId+1,
-      useVerboseFeedback: true
+      useVerboseFeedback: true,
+      listLoaded: false
     }
   }
 
@@ -68,7 +69,8 @@ class App extends Component {
 
     this.setState({
       toDoLists: nextLists,
-      currentList: toDoList
+      currentList: toDoList,
+      listLoaded: true
     });
   }
 
@@ -81,7 +83,8 @@ class App extends Component {
     this.setState({
       toDoLists: newToDoListsList,
       currentList: newToDoList,
-      nextListId: this.state.nextListId+1
+      nextListId: this.state.nextListId+1,
+      listLoaded: true
     }, this.afterToDoListsChangeComplete);
   }
 
@@ -121,7 +124,7 @@ class App extends Component {
           toDoLists={this.state.toDoLists}
           loadToDoListCallback={this.loadToDoList}
           addNewListCallback={this.addNewList}
-          loadedList={this.state.currentList.items}
+          loadedList={this.state.listLoaded}
         />
         <Workspace toDoListItems={items} />
       </div>
