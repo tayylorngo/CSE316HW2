@@ -13,6 +13,13 @@ class LeftSidebar extends Component {
     }
 
     render() {
+        let addListButtonStyle = null;
+        if(this.props.loadedList){
+            addListButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
         return (
             <div id="left-sidebar">
                 <div id="left-sidebar-header" class="section-header">
@@ -21,7 +28,9 @@ class LeftSidebar extends Component {
                         <AddBox 
                             id="add-list-button"
                             className="material-icons todo_button"
-                            onClick={this.handleAddNewList} />
+                            onClick={this.handleAddNewList} 
+                            style={addListButtonStyle}
+                        />
                     </span>
                 </div>
                 <div id="todo-lists-list">

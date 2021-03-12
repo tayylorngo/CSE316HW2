@@ -152,6 +152,7 @@ class App extends Component {
           toDoListItems={items} 
           openDeleteListModal={this.openDeleteListModal}
           closeCurrentList={this.closeCurrentList}
+          loadedList={this.state.listLoaded}
         />
         {this.state.deletingList ? 
         <DeleteListModal

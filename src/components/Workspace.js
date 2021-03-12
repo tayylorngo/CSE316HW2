@@ -13,6 +13,14 @@ class Workspace extends Component {
     }
 
     render() {
+        let buttonStyle = null;
+        if(!this.props.loadedList){
+            buttonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
+
         return (
             <div id="workspace">
                 <div id="todo-list-header-card" className="list-item-card">
@@ -20,18 +28,20 @@ class Workspace extends Component {
                     <div id="date-col-header" className="item-col todo-button">Due Date</div>
                     <div id="status-col-header" className="item-col todo-button">Status</div>
                     <div className="item-col" display="flex" flexDirection="row" flexWrap="nowrap">
-                        <Undo id="undo-button" className="list-item-control material-icons todo-button" />
-                        <Redo id="redo-button" className="list-item-control material-icons todo-button" />
-                        <AddBox id="add-item-button" className="list-item-control material-icons todo-button" />
+                        <Undo id="undo-button" className="list-item-control material-icons todo-button" style={buttonStyle} />
+                        <Redo id="redo-button" className="list-item-control material-icons todo-button" style={buttonStyle}/>
+                        <AddBox id="add-item-button" className="list-item-control material-icons todo-button" style={buttonStyle}/>
                         <Delete 
                             id="delete-list-button" 
                             className="list-item-control material-icons todo-button" 
                             onClick={this.props.openDeleteListModal}
+                            style={buttonStyle}
                         />
                         <Close 
                             id="close-list-button" 
                             className="list-item-control material-icons todo-button" 
                             onClick={this.props.closeCurrentList}
+                            style={buttonStyle}
                         />
                     </div>
                 </div>
