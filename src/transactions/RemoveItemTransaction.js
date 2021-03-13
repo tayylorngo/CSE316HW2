@@ -14,7 +14,6 @@ export default class RemoveItemTransaction extends jsTPS_Transaction {
     }
 
     undoTransaction() {
-        
-
+        this.app.addItemAtIndex(this.removedItem[0], this.removedItem[1])
     }
 }

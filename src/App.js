@@ -61,6 +61,14 @@ class App extends Component {
     }
   }
 
+  undo = () => {
+    this.tps.undoTransaction();
+  }
+
+  redo = () => {
+    this.tps.doTransaction();
+  }
+
   // WILL LOAD THE SELECTED LIST
   loadToDoList = (toDoList) => {
     console.log("loading " + toDoList);
@@ -170,6 +178,17 @@ class App extends Component {
       });
   }
 
+  addItemAtIndex = (item, index) => {
+      let newToDoLists = this.state.toDoLists;
+      let currentList = this.state.currentList;
+      currentList.items.splice(index, 0, item);
+      newToDoLists[0] = currentList;
+      this.setState({
+        toDoLists: newToDoLists,
+        currentList: currentList
+      });
+  }
+
   removeItemTransaction = (itemId) => {
       let transaction = new RemoveItemTransaction(this, itemId);
       this.tps.addTransaction(transaction);
@@ -192,7 +211,7 @@ class App extends Component {
         toDoLists: newToDoLists,
         currentList: currentList
         });
-      return removedItem;
+      return [removedItem, index];
   }
 
   render() {
@@ -219,6 +238,8 @@ class App extends Component {
           hasRedo={hasRedo}
           addNewItem={this.addNewItemTransaction}
           removeItem={this.removeItemTransaction}
+          undoTransaction={this.undo}
+          redoTransaction={this.redo}
         />
         {this.state.deletingList ? 
         <DeleteListModal
