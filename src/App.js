@@ -10,6 +10,9 @@ import Workspace from './components/Workspace'
 import DeleteListModal from './components/DeleteListModal/DeleteListModal'
 import AddNewItemTransaction from './transactions/AddNewItemTransaction';
 import RemoveItemTransaction from './transactions/RemoveItemTransaction';
+import MoveItemUpTransaction from './transactions/MoveItemUpTransaction';
+import MoveItemDownTransaction from './transactions/MoveItemDownTransaction';
+import { FormLabel } from '@material-ui/core';
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -84,6 +87,7 @@ class App extends Component {
       currentList: toDoList,
       listLoaded: true
     });
+    this.tps.clearAllTransactions();
   }
 
   addNewList = () => {
@@ -151,7 +155,8 @@ class App extends Component {
     this.setState({
       currentList: {items: []},
       listLoaded: false
-    })
+    });
+    this.tps.clearAllTransactions();
   }
 
   changeListName = (newName) => {
@@ -214,6 +219,54 @@ class App extends Component {
       return [removedItem, index];
   }
 
+  moveItemUpTransaction = (itemId) => {
+      let transaction = new MoveItemUpTransaction(this, itemId);
+      this.tps.addTransaction(transaction);
+  }
+
+  moveItemUp = (itemId) => {
+      let newToDoLists = this.state.toDoLists;
+      let currentList = this.state.currentList;
+      let index = -1;
+      for(let i = 0; i < currentList.items.length; i++){
+          if(itemId === currentList.items[i].id){
+            index = i;
+            break;
+          }
+      }
+      let item1 = currentList.items[index];
+      currentList.items[index] = currentList.items[index - 1];
+      currentList.items[index - 1] = item1;
+      this.setState({
+        toDoLists: newToDoLists,
+        currentList: currentList
+        });
+  }
+
+  moveItemDownTransaction = (itemId) => {
+      let transaction = new MoveItemDownTransaction(this, itemId);
+      this.tps.addTransaction(transaction);
+  }
+
+  moveItemDown = (itemId) => {
+    let newToDoLists = this.state.toDoLists;
+    let currentList = this.state.currentList;
+    let index = -1;
+    for(let i = 0; i < currentList.items.length; i++){
+        if(itemId === currentList.items[i].id){
+          index = i;
+          break;
+        }
+    }
+    let item1 = currentList.items[index];
+    currentList.items[index] = currentList.items[index + 1];
+    currentList.items[index + 1] = item1;
+    this.setState({
+      toDoLists: newToDoLists,
+      currentList: currentList
+      });
+}
+
   render() {
     let items = this.state.currentList.items;
     let hasUndo = this.tps.hasTransactionToUndo();
@@ -238,6 +291,8 @@ class App extends Component {
           hasRedo={hasRedo}
           addNewItem={this.addNewItemTransaction}
           removeItem={this.removeItemTransaction}
+          moveItemUp={this.moveItemUpTransaction}
+          moveItemDown={this.moveItemDownTransaction}
           undoTransaction={this.undo}
           redoTransaction={this.redo}
         />

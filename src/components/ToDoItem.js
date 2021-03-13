@@ -21,6 +21,14 @@ class ToDoItem extends Component {
         this.props.removeItem(this.props.toDoListItem.id);
     }
 
+    handleMoveItemUp = () => {
+        this.props.moveItemUp(this.props.toDoListItem.id);
+    }
+
+    handleMoveItemDown = () => {
+        this.props.moveItemDown(this.props.toDoListItem.id);
+    }
+
     render() {
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tToDoItem render");
@@ -36,8 +44,14 @@ class ToDoItem extends Component {
                 <div className='item-col status-col'><h4 className={statusType}>{listItem.status}</h4></div>
                 <div className='item-col test-4-col'></div>
                 <div className='item-col list-controls-col'>
-                    <KeyboardArrowUp className='list-item-control todo-button' />
-                    <KeyboardArrowDown className='list-item-control todo-button' />
+                    <KeyboardArrowUp 
+                        className='list-item-control todo-button' 
+                        onClick={this.handleMoveItemUp}
+                    />
+                    <KeyboardArrowDown 
+                        className='list-item-control todo-button' 
+                        onClick={this.handleMoveItemDown}
+                    />
                     <Close 
                         className='list-item-control todo-button' 
                         onClick={this.handleDeleteItemId}
