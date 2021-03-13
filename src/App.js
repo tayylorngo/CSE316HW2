@@ -117,7 +117,7 @@ class App extends Component {
   makeNewToDoListItem = () =>  {
     let newToDoListItem = {
       description: "No Description",
-      dueDate: "none",
+      due_date: "No Date",
       status: "incomplete"
     };
     return newToDoListItem;
