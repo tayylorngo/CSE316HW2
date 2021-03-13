@@ -75,14 +75,43 @@ class Workspace extends Component {
                 </div>
                 <div id="todo-list-items-div">
                     {
-                        this.props.toDoListItems.map((toDoListItem) => (
-                        <ToDoItem
-                            key={toDoListItem.id}
-                            toDoListItem={toDoListItem}
-                            removeItem={this.props.removeItem}
-                            moveItemUp={this.props.moveItemUp}
-                            moveItemDown={this.props.moveItemDown}     // PASS THE ITEM TO THE CHILDREN
-                        />))
+                        this.props.toDoListItems.map((toDoListItem, index) => {
+                            if(index === 0){
+                                return(<ToDoItem
+                                    key={toDoListItem.id}
+                                    toDoListItem={toDoListItem}
+                                    removeItem={this.props.removeItem}
+                                    moveItemUp={this.props.moveItemUp}
+                                    moveItemDown={this.props.moveItemDown}
+                                    firstItem={true}
+                                    lastItem={false}                                 
+                                />);
+                            }
+                            else if(index === this.props.toDoListItems.length - 1){
+                                return(<ToDoItem
+                                    key={toDoListItem.id}
+                                    toDoListItem={toDoListItem}
+                                    removeItem={this.props.removeItem}
+                                    moveItemUp={this.props.moveItemUp}
+                                    moveItemDown={this.props.moveItemDown}
+                                    firstItem={false}
+                                    lastItem={true}                                 
+                                />);
+                            }
+                            else {
+                                return(
+                                    <ToDoItem
+                                        key={toDoListItem.id}
+                                        toDoListItem={toDoListItem}
+                                        removeItem={this.props.removeItem}
+                                        moveItemUp={this.props.moveItemUp}
+                                        moveItemDown={this.props.moveItemDown}      
+                                        firstItem={false}
+                                        lastItem={false}                           
+                                    />
+                                );
+                            }
+                        })
                     }
                 </div>
                 <br />

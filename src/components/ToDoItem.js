@@ -30,6 +30,23 @@ class ToDoItem extends Component {
     }
 
     render() {
+        let moveItemUpButtonStyle = null;
+        let moveItemDownButtonStyle = null;
+
+        if(this.props.firstItem){
+            moveItemUpButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
+
+        if(this.props.lastItem){
+            moveItemDownButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
+
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tToDoItem render");
         let listItem = this.props.toDoListItem;
@@ -47,10 +64,12 @@ class ToDoItem extends Component {
                     <KeyboardArrowUp 
                         className='list-item-control todo-button' 
                         onClick={this.handleMoveItemUp}
+                        style={moveItemUpButtonStyle}
                     />
                     <KeyboardArrowDown 
                         className='list-item-control todo-button' 
                         onClick={this.handleMoveItemDown}
+                        style={moveItemDownButtonStyle}
                     />
                     <Close 
                         className='list-item-control todo-button' 
