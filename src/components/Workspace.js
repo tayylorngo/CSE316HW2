@@ -84,7 +84,8 @@ class Workspace extends Component {
                                     moveItemUp={this.props.moveItemUp}
                                     moveItemDown={this.props.moveItemDown}
                                     firstItem={true}
-                                    lastItem={false}                                 
+                                    lastItem={false}
+                                    updateDescription={this.props.updateDescription}                                 
                                 />);
                             }
                             else if(index === this.props.toDoListItems.length - 1){
@@ -95,7 +96,9 @@ class Workspace extends Component {
                                     moveItemUp={this.props.moveItemUp}
                                     moveItemDown={this.props.moveItemDown}
                                     firstItem={false}
-                                    lastItem={true}                                 
+                                    lastItem={true}    
+                                    updateDescription={this.props.updateDescription}                                 
+                             
                                 />);
                             }
                             else {
@@ -107,7 +110,8 @@ class Workspace extends Component {
                                         moveItemUp={this.props.moveItemUp}
                                         moveItemDown={this.props.moveItemDown}      
                                         firstItem={false}
-                                        lastItem={false}                           
+                                        lastItem={false}    
+                                        updateDescription={this.props.updateDescription}                                                        
                                     />
                                 );
                             }
