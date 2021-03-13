@@ -14,15 +14,22 @@ class Workspace extends Component {
 
     render() {
         let buttonStyle = null;
-        let transactionButtonStyle = null;
+        let transactionUndoButtonStyle = null;
+        let transactionRedoButtonStyle = null;
         if(!this.props.loadedList){
             buttonStyle = {
                 pointerEvents: "none",
                 color: "#322d2d"
             }
         }
-        if(this.props.transactionSize === 0){
-            transactionButtonStyle = {
+        if(!this.props.hasUndo){
+            transactionUndoButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
+        if(!this.props.hasRedo){
+            transactionRedoButtonStyle = {
                 pointerEvents: "none",
                 color: "#322d2d"
             }
@@ -34,9 +41,14 @@ class Workspace extends Component {
                     <div id="date-col-header" className="item-col todo-button">Due Date</div>
                     <div id="status-col-header" className="item-col todo-button">Status</div>
                     <div className="item-col" display="flex" flexDirection="row" flexWrap="nowrap">
-                        <Undo id="undo-button" className="list-item-control material-icons todo-button" style={transactionButtonStyle} />
-                        <Redo id="redo-button" className="list-item-control material-icons todo-button" style={transactionButtonStyle}/>
-                        <AddBox id="add-item-button" className="list-item-control material-icons todo-button" style={buttonStyle}/>
+                        <Undo id="undo-button" className="list-item-control material-icons todo-button" style={transactionUndoButtonStyle} />
+                        <Redo id="redo-button" className="list-item-control material-icons todo-button" style={transactionRedoButtonStyle}/>
+                        <AddBox 
+                            id="add-item-button" 
+                            className="list-item-control material-icons todo-button" 
+                            style={buttonStyle}
+                            onClick={this.props.addNewItem}
+                        />
                         <Delete 
                             id="delete-list-button" 
                             className="list-item-control material-icons todo-button" 
@@ -56,7 +68,8 @@ class Workspace extends Component {
                         this.props.toDoListItems.map((toDoListItem) => (
                         <ToDoItem
                             key={toDoListItem.id}
-                            toDoListItem={toDoListItem}     // PASS THE ITEM TO THE CHILDREN
+                            toDoListItem={toDoListItem}
+                            removeItem={this.props.removeItem}     // PASS THE ITEM TO THE CHILDREN
                         />))
                     }
                 </div>

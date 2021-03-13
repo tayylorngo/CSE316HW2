@@ -26,7 +26,7 @@ class ListLink extends Component {
         if(event.detail === 1 && !this.props.currentList){
             this.handleLoadList();
         }
-        else if(event.detail === 2){
+        else if(event.detail === 2 && this.props.currentList){
             this.setState(
                 {editingListName: true}
             );
@@ -53,8 +53,6 @@ class ListLink extends Component {
         if(this.state.editingListName){
             inputStyle.display = "block";
             listName = null;
-            console.log(this.listName);
-            this.listName.focus();
         }
 
         // DISPLAY WHERE WE ARE

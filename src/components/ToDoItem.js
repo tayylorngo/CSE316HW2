@@ -17,6 +17,10 @@ class ToDoItem extends Component {
         console.log("\t\t\tToDoItem " + this.props.toDoListItem.id + " did mount");
     }
 
+    handleDeleteItemId = () => {
+        this.props.removeItem(this.props.toDoListItem.id);
+    }
+
     render() {
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tToDoItem render");
@@ -34,7 +38,10 @@ class ToDoItem extends Component {
                 <div className='item-col list-controls-col'>
                     <KeyboardArrowUp className='list-item-control todo-button' />
                     <KeyboardArrowDown className='list-item-control todo-button' />
-                    <Close className='list-item-control todo-button' />
+                    <Close 
+                        className='list-item-control todo-button' 
+                        onClick={this.handleDeleteItemId}
+                    />
                     <div className='list-item-control'></div>
         <div className='list-item-control'></div>
                 </div>

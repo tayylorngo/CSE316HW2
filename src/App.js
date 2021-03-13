@@ -8,6 +8,8 @@ import Navbar from './components/Navbar'
 import LeftSidebar from './components/LeftSidebar'
 import Workspace from './components/Workspace'
 import DeleteListModal from './components/DeleteListModal/DeleteListModal'
+import AddNewItemTransaction from './transactions/AddNewItemTransaction';
+import RemoveItemTransaction from './transactions/RemoveItemTransaction';
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -92,7 +94,7 @@ class App extends Component {
 
   makeNewToDoList = () => {
     let newToDoList = {
-      id: this.highListId,
+      id: this.state.nextListId,
       name: 'Untitled',
       items: []
     };
@@ -152,9 +154,52 @@ class App extends Component {
       }, this.afterToDoListsChangeComplete);
   }
 
+  addNewItemTransaction = () => {
+    let transaction = new AddNewItemTransaction(this);
+    this.tps.addTransaction(transaction);
+  }
+
+  addNewItem = (newItem) => {
+    let newToDoLists = this.state.toDoLists;
+    let currentList = this.state.currentList;
+    currentList.items.push(newItem);
+    newToDoLists[0] = currentList;
+    this.setState({
+      toDoLists: newToDoLists,
+      currentList: currentList
+      });
+  }
+
+  removeItemTransaction = (itemId) => {
+      let transaction = new RemoveItemTransaction(this, itemId);
+      this.tps.addTransaction(transaction);
+  }
+
+  removeItem = (itemId) => {
+      let newToDoLists = this.state.toDoLists;
+      let currentList = this.state.currentList;
+      let index = -1;
+      for(let i = 0; i < currentList.items.length; i++){
+          if(itemId === currentList.items[i].id){
+              index = i;
+              break;
+          }
+      }
+      let removedItem = currentList.items[index];
+      currentList.items.splice(index, 1);
+      newToDoLists[0] = currentList;
+      this.setState({
+        toDoLists: newToDoLists,
+        currentList: currentList
+        });
+      return removedItem;
+  }
+
   render() {
     let items = this.state.currentList.items;
-    let transactionStackSize = this.tps.getSize();
+    let hasUndo = this.tps.hasTransactionToUndo();
+    let hasRedo = this.tps.hasTransactionToRedo();
+    
     return (
       <div id="root">
         <Navbar />
@@ -170,7 +215,10 @@ class App extends Component {
           openDeleteListModal={this.openDeleteListModal}
           closeCurrentList={this.closeCurrentList}
           loadedList={this.state.listLoaded}
-          transactionSize={transactionStackSize}
+          hasUndo={hasUndo}
+          hasRedo={hasRedo}
+          addNewItem={this.addNewItemTransaction}
+          removeItem={this.removeItemTransaction}
         />
         {this.state.deletingList ? 
         <DeleteListModal
