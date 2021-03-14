@@ -48,6 +48,19 @@ class ToDoItem extends Component {
         );
     }
 
+    handleEditDate = () => {
+        this.setState(
+            {editingDate: true}
+        );
+    }
+
+    handleUpdateDate = (event) => {
+        this.props.updateDate(this.props.toDoListItem.id, event.target.value, this.props.toDoListItem.due_date);
+        this.setState(
+            {editingDate: false}
+        );
+    }
+
     render() {
         let moveItemUpButtonStyle = null;
         let moveItemDownButtonStyle = null;
@@ -83,7 +96,21 @@ class ToDoItem extends Component {
                                 </input>
 
 
-        let dateInput = <input type="date" style={dateInputStyle}></input>
+        let dateInput = <input 
+                            type="date" 
+                            style={dateInputStyle}
+                            onBlur={this.handleUpdateDate}
+                            defaultValue={this.props.toDoListItem.due_date}
+                            ref={(input) => {
+                                this.dateInput = input;
+                                if(this.dateInput){
+                                    this.dateInput.focus();
+                                }
+                            }}
+                        >
+                            
+                        </input>
+
         let completionInput = (
                             <select style={statusInputStyle}>
                                 <option>complete</option>
@@ -97,21 +124,31 @@ class ToDoItem extends Component {
         if (listItem.status === "incomplete")
             statusType = "status-incomplete";
 
-        let itemDescription = <div className='item-col task-col' onDoubleClick={this.handleEditDescription}>
-                                        <h4>{listItem.description}</h4>
-                              </div>;
+        let itemDescription = <h4>{listItem.description}</h4>
+        let itemDate = <h4>{listItem.due_date}</h4>;
+
+                             
         if(this.state.editingDescription){
             itemDescription = null;
+        }
+        if(this.state.editingDate){
+            itemDate = null;
         }
 
         return (
             <div id={'todo-list-item-' + listItem.id} className='list-item-card'>
-                {itemDescription}
-                {descriptionInput}
-                <div className='item-col due-date-col'><h4>{listItem.due_date}</h4></div>
-                {dateInput}
-                <div className='item-col status-col'><h4 className={statusType}>{listItem.status}</h4></div>
-                {completionInput}
+                <div className='item-col task-col' onDoubleClick={this.handleEditDescription}>
+                    {itemDescription}
+                    {descriptionInput}
+                </div>
+                <div className='item-col due-date-col' onDoubleClick={this.handleEditDate}>
+                    {itemDate}
+                    {dateInput}
+                </div>
+                <div className='item-col status-col'>
+                    <h4 className={statusType}>{listItem.status}</h4>
+                    {completionInput}
+                </div>
                 <div className='item-col test-4-col'></div>
                 <div className='item-col list-controls-col'>
                     <KeyboardArrowUp 

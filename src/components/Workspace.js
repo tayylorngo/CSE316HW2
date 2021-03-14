@@ -85,7 +85,9 @@ class Workspace extends Component {
                                     moveItemDown={this.props.moveItemDown}
                                     firstItem={true}
                                     lastItem={false}
-                                    updateDescription={this.props.updateDescription}                                 
+                                    updateDescription={this.props.updateDescription}     
+                                    updateDate={this.props.updateDate}                                                        
+                            
                                 />);
                             }
                             else if(index === this.props.toDoListItems.length - 1){
@@ -98,7 +100,8 @@ class Workspace extends Component {
                                     firstItem={false}
                                     lastItem={true}    
                                     updateDescription={this.props.updateDescription}                                 
-                             
+                                    updateDate={this.props.updateDate}                                                        
+
                                 />);
                             }
                             else {
@@ -111,7 +114,8 @@ class Workspace extends Component {
                                         moveItemDown={this.props.moveItemDown}      
                                         firstItem={false}
                                         lastItem={false}    
-                                        updateDescription={this.props.updateDescription}                                                        
+                                        updateDescription={this.props.updateDescription}
+                                        updateDate={this.props.updateDate}                                                        
                                     />
                                 );
                             }
