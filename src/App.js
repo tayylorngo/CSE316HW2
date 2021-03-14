@@ -63,16 +63,44 @@ class App extends Component {
       nextListItemId: highListItemId+1,
       useVerboseFeedback: true,
       listLoaded: false,
-      deletingList: false
+      deletingList: false,
     }
+  }
+
+  componentDidMount(){
+      document.addEventListener("keydown", this.handleUndoKeyboard.bind(this), false);
+      document.addEventListener("keydown", this.handleRedoKeyboard.bind(this), false);
+
   }
 
   undo = () => {
     this.tps.undoTransaction();
   }
 
+  handleUndoKeyboard (e){
+      if(e.ctrlKey && e.which === 90){
+        if(this.tps.hasTransactionToUndo()){
+          this.tps.undoTransaction();
+          if(!this.tps.hasTransactionToUndo()){
+            this.setState(this.state);
+          }
+        }
+      }
+  }
+
   redo = () => {
     this.tps.doTransaction();
+  }
+
+  handleRedoKeyboard(e){
+    if(e.ctrlKey && e.which === 89){
+      if(this.tps.hasTransactionToRedo()){
+          this.tps.doTransaction();
+        if(!this.tps.hasTransactionToRedo()){
+          this.setState(this.state);
+        }
+      }
+    }
   }
 
   // WILL LOAD THE SELECTED LIST
