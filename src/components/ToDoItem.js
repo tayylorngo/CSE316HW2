@@ -61,6 +61,19 @@ class ToDoItem extends Component {
         );
     }
 
+    handleEditStatus = () => {
+        this.setState(
+            {editingStatus: true}
+        );
+    }
+
+    handleUpdateStatus = (event) => {
+        this.props.updateStatus(this.props.toDoListItem.id, event.target.value, this.props.toDoListItem.status);
+        this.setState({
+            editingStatus: false
+        });
+    }
+
     render() {
         let moveItemUpButtonStyle = null;
         let moveItemDownButtonStyle = null;
@@ -95,7 +108,6 @@ class ToDoItem extends Component {
                                 >
                                 </input>
 
-
         let dateInput = <input 
                             type="date" 
                             style={dateInputStyle}
@@ -112,7 +124,17 @@ class ToDoItem extends Component {
                         </input>
 
         let completionInput = (
-                            <select style={statusInputStyle}>
+                            <select 
+                            style={statusInputStyle}
+                            onBlur={this.handleUpdateStatus}
+                            defaultValue={this.props.toDoListItem.status}
+                            ref={(input) => {
+                                this.statusInput = input;
+                                if(this.statusInput){
+                                    this.statusInput.focus();
+                                }
+                            }}
+                            >
                                 <option>complete</option>
                                 <option>incomplete</option>
                             </select>);
@@ -126,13 +148,16 @@ class ToDoItem extends Component {
 
         let itemDescription = <h4>{listItem.description}</h4>
         let itemDate = <h4>{listItem.due_date}</h4>;
-
+        let itemStatus = <h4 className={statusType}>{listItem.status}</h4>;
                              
         if(this.state.editingDescription){
             itemDescription = null;
         }
         if(this.state.editingDate){
             itemDate = null;
+        }
+        if(this.state.editingStatus){
+            itemStatus = null;
         }
 
         return (
@@ -145,8 +170,8 @@ class ToDoItem extends Component {
                     {itemDate}
                     {dateInput}
                 </div>
-                <div className='item-col status-col'>
-                    <h4 className={statusType}>{listItem.status}</h4>
+                <div className='item-col status-col' onDoubleClick={this.handleEditStatus}>
+                    {itemStatus}
                     {completionInput}
                 </div>
                 <div className='item-col test-4-col'></div>

@@ -15,6 +15,7 @@ import MoveItemDownTransaction from './transactions/MoveItemDownTransaction';
 import { FormLabel } from '@material-ui/core';
 import EditDescriptionTransaction from './transactions/EditDescriptionTransaction';
 import EditDateTransaction from './transactions/EditDateTransaction';
+import EditItemStatusTransaction from './transactions/EditItemStatusTransaction';
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -309,6 +310,26 @@ updateItemDate = (itemId, newDate) => {
     });
 }
 
+updateItemStatusTransaction = (itemId, newStatus, oldStatus) => {
+    let transaction = new EditItemStatusTransaction(this, itemId, newStatus, oldStatus);
+    this.tps.addTransaction(transaction);
+}
+
+updateItemStatus = (itemId, newStatus) =>{ 
+  let newToDoLists = this.state.toDoLists;
+  let currentList = this.state.currentList;
+  for(let i = 0; i < currentList.items.length; i++){
+      if(itemId === currentList.items[i].id){
+        currentList.items[i].status = newStatus;
+        break;
+      }
+  }
+  this.setState({
+    toDoLists: newToDoLists,
+    currentList: currentList
+    });
+}
+
   render() {
     let items = this.state.currentList.items;
     let hasUndo = this.tps.hasTransactionToUndo();
@@ -337,6 +358,7 @@ updateItemDate = (itemId, newDate) => {
           moveItemDown={this.moveItemDownTransaction}
           updateDescription={this.updateItemDescriptionTransaction}
           updateDate={this.updateItemDateTransaction}
+          updateStatus={this.updateItemStatusTransaction}
           undoTransaction={this.undo}
           redoTransaction={this.redo}
         />
