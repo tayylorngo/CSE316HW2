@@ -159,7 +159,7 @@ class App extends Component {
 
     // WILL THIS WORK? @todo
     let toDoListsString = JSON.stringify(this.state.toDoLists);
-    localStorage.setItem("recent_work", toDoListsString);
+    localStorage.setItem("recentLists", toDoListsString);
   }
 
   openDeleteListModal = () => {
@@ -186,7 +186,7 @@ class App extends Component {
     this.setState({
       currentList: {items: []},
       listLoaded: false
-    });
+    }, this.afterToDoListsChangeComplete);
     this.tps.clearAllTransactions();
   }
 
@@ -211,7 +211,7 @@ class App extends Component {
     this.setState({
       toDoLists: newToDoLists,
       currentList: currentList
-      });
+      }, this.afterToDoListsChangeComplete);
   }
 
   addItemAtIndex = (item, index) => {
@@ -222,7 +222,7 @@ class App extends Component {
       this.setState({
         toDoLists: newToDoLists,
         currentList: currentList
-      });
+      }, this.afterToDoListsChangeComplete);
   }
 
   removeItemTransaction = (itemId) => {
@@ -246,7 +246,7 @@ class App extends Component {
       this.setState({
         toDoLists: newToDoLists,
         currentList: currentList
-        });
+        }, this.afterToDoListsChangeComplete);
       return [removedItem, index];
   }
 
@@ -271,7 +271,7 @@ class App extends Component {
       this.setState({
         toDoLists: newToDoLists,
         currentList: currentList
-        });
+        }, this.afterToDoListsChangeComplete);
   }
 
   moveItemDownTransaction = (itemId) => {
@@ -295,7 +295,7 @@ class App extends Component {
     this.setState({
       toDoLists: newToDoLists,
       currentList: currentList
-      });
+      }, this.afterToDoListsChangeComplete);
 }
 
 updateItemDescriptionTransaction = (itemId, newDescription, oldDescription) => {
@@ -315,7 +315,7 @@ updateItemDescription = (itemId, newDescription) => {
     this.setState({
       toDoLists: newToDoLists,
       currentList: currentList
-      });
+      }, this.afterToDoListsChangeComplete);
 }
 
 updateItemDateTransaction = (itemId, newDate, oldDate) => {
@@ -335,7 +335,7 @@ updateItemDate = (itemId, newDate) => {
   this.setState({
     toDoLists: newToDoLists,
     currentList: currentList
-    });
+    }, this.afterToDoListsChangeComplete);
 }
 
 updateItemStatusTransaction = (itemId, newStatus, oldStatus) => {
@@ -355,7 +355,7 @@ updateItemStatus = (itemId, newStatus) =>{
   this.setState({
     toDoLists: newToDoLists,
     currentList: currentList
-    });
+    }, this.afterToDoListsChangeComplete);
 }
 
   render() {
