@@ -46,6 +46,10 @@
     font-weight: bold;
 }
 
+#todo-list-header-card:hover{
+    background-color: var(--swatch-primary);
+}
+
 #workspace {
     background-color: var(--swatch-primary);
     color: rgb(233,237,240);
@@ -67,12 +71,17 @@
 
 .list-item-control {
     cursor: pointer;
+    margin-right: 20px;
 }
 
 .list-item-card {
     border-bottom: solid;
     border-width: 1px;
     font-weight: bold;
+}
+
+.list-item-card:hover{
+    background-color: #4D5059;
 }
 
 .todo-list-button {
@@ -87,16 +96,21 @@
 
 .todo-button {
     cursor:pointer;
-    background-color: var(--swatch-complement);
     font-weight: bold;
+    padding-right: 20px;
 }
 
 .todo-button:hover {
-    background-color: var(--swatch-contrast);
+    background-color: #C3C4C7;
 }
 
 #add-list-button {
     color: var(--swatch-accent);
+    margin-right: 5px;
+}
+
+#add-list-button:hover{
+    background-color: #C3C4C7;
 }
 
 .status-incomplete {
@@ -109,4 +123,20 @@
 
 #add-item-button, #delete-list-button, #close-list-button {
     text-align: center;
+}
+
+#task-col-header{
+    pointer-events: none;
+}
+
+#date-col-header{
+    pointer-events: none;
+}
+
+#status-col-header{
+    pointer-events: none;
+}
+
+#itemControls{
+    padding-top: 15px;
 }

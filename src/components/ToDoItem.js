@@ -105,6 +105,7 @@ class ToDoItem extends Component {
                                             this.descriptionInput.focus();
                                         }
                                     }}
+                                    className="itemNameChangeForm"
                                 >
                                 </input>
 
@@ -119,6 +120,7 @@ class ToDoItem extends Component {
                                     this.dateInput.focus();
                                 }
                             }}
+                            className="itemDateChangeForm"
                         >
                             
                         </input>
@@ -134,6 +136,7 @@ class ToDoItem extends Component {
                                     this.statusInput.focus();
                                 }
                             }}
+                            className="itemCompletionForm"
                             >
                                 <option>complete</option>
                                 <option>incomplete</option>
@@ -145,9 +148,11 @@ class ToDoItem extends Component {
         let statusType = "status-complete";
         if (listItem.status === "incomplete")
             statusType = "status-incomplete";
+        
+        statusType += " itemStatus"
 
         let itemDescription = <h4>{listItem.description}</h4>
-        let itemDate = <h4>{listItem.due_date}</h4>;
+        let itemDate = <h4  className="itemDate">{listItem.due_date}</h4>;
         let itemStatus = <h4 className={statusType}>{listItem.status}</h4>;
                              
         if(this.state.editingDescription){
@@ -174,24 +179,24 @@ class ToDoItem extends Component {
                     {itemStatus}
                     {completionInput}
                 </div>
-                <div className='item-col test-4-col'></div>
-                <div className='item-col list-controls-col'>
+                <div className='item-col test-4-col'>
+                    <div id="itemControls">
                     <KeyboardArrowUp 
-                        className='list-item-control todo-button' 
-                        onClick={this.handleMoveItemUp}
-                        style={moveItemUpButtonStyle}
-                    />
-                    <KeyboardArrowDown 
-                        className='list-item-control todo-button' 
-                        onClick={this.handleMoveItemDown}
-                        style={moveItemDownButtonStyle}
-                    />
-                    <Close 
-                        className='list-item-control todo-button' 
-                        onClick={this.handleDeleteItemId}
-                    />
-                    <div className='list-item-control'></div>
-        <div className='list-item-control'></div>
+                            className='list-item-control todo-button' 
+                            onClick={this.handleMoveItemUp}
+                            style={moveItemUpButtonStyle}
+                        />
+                        <KeyboardArrowDown 
+                            className='list-item-control todo-button' 
+                            onClick={this.handleMoveItemDown}
+                            style={moveItemDownButtonStyle}
+                        />
+                        <Close 
+                            className='list-item-control todo-button' 
+                            onClick={this.handleDeleteItemId}
+                        />
+                        <div className='list-item-control'></div> 
+                    </div>
                 </div>
             </div>
         )

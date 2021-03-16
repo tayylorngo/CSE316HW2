@@ -372,14 +372,16 @@ updateItemStatus = (itemId, newStatus) =>{
           addNewListCallback={this.addNewList}
           loadedList={this.state.listLoaded}
           changeListName={this.changeListName}
+          undoTransaction={this.undo}
+          redoTransaction={this.redo}
+          hasUndo={hasUndo}
+          hasRedo={hasRedo}
         />
         <Workspace 
           toDoListItems={items} 
           openDeleteListModal={this.openDeleteListModal}
           closeCurrentList={this.closeCurrentList}
           loadedList={this.state.listLoaded}
-          hasUndo={hasUndo}
-          hasRedo={hasRedo}
           addNewItem={this.addNewItemTransaction}
           removeItem={this.removeItemTransaction}
           moveItemUp={this.moveItemUpTransaction}
@@ -387,15 +389,13 @@ updateItemStatus = (itemId, newStatus) =>{
           updateDescription={this.updateItemDescriptionTransaction}
           updateDate={this.updateItemDateTransaction}
           updateStatus={this.updateItemStatusTransaction}
-          undoTransaction={this.undo}
-          redoTransaction={this.redo}
         />
         {this.state.deletingList ? 
         <DeleteListModal
           closeModal={this.closeDeleteListModal}
           deleteListFunction={this.deleteList}
         /> : null}
-=      </div>
+      </div>
     );
   }
 }

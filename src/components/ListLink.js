@@ -73,6 +73,7 @@ class ListLink extends Component {
                             this.listName.focus();
                         }
                     }}
+                    className="listNameChangeForm"
                 >
                 </input>
                 {listName}

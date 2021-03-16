@@ -1,8 +1,6 @@
 // IMPORT ALL THE THINGS NEEDED FROM OTHER JAVASCRIPT SOURCE FILES
 import React, { Component } from 'react'
 import ToDoItem from './ToDoItem'
-import Undo from '@material-ui/icons/Undo';
-import Redo from '@material-ui/icons/Redo';
 import AddBox from '@material-ui/icons/AddBox';
 import Delete from '@material-ui/icons/Delete';
 import Close from '@material-ui/icons/Close';
@@ -22,18 +20,6 @@ class Workspace extends Component {
                 color: "#322d2d"
             }
         }
-        if(!this.props.hasUndo){
-            transactionUndoButtonStyle = {
-                pointerEvents: "none",
-                color: "#322d2d"
-            }
-        }
-        if(!this.props.hasRedo){
-            transactionRedoButtonStyle = {
-                pointerEvents: "none",
-                color: "#322d2d"
-            }
-        }
         return (
             <div id="workspace">
                 <div id="todo-list-header-card" className="list-item-card">
@@ -41,18 +27,6 @@ class Workspace extends Component {
                     <div id="date-col-header" className="item-col todo-button">Due Date</div>
                     <div id="status-col-header" className="item-col todo-button">Status</div>
                     <div className="item-col" display="flex" flexDirection="row" flexWrap="nowrap">
-                        <Undo 
-                            id="undo-button" 
-                            className="list-item-control material-icons todo-button" 
-                            style={transactionUndoButtonStyle} 
-                            onClick={this.props.undoTransaction}
-                        />
-                        <Redo 
-                            id="redo-button" 
-                            className="list-item-control material-icons todo-button" 
-                            style={transactionRedoButtonStyle}
-                            onClick={this.props.redoTransaction}
-                        />
                         <AddBox 
                             id="add-item-button" 
                             className="list-item-control material-icons todo-button" 

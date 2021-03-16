@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import ListLink from './ListLink'
 import AddBox from '@material-ui/icons/AddBox';
+import Undo from '@material-ui/icons/Undo';
+import Redo from '@material-ui/icons/Redo';
 
 class LeftSidebar extends Component {
     constructor(props) {
@@ -14,6 +16,20 @@ class LeftSidebar extends Component {
 
     render() {
         let addListButtonStyle = null;
+        let transactionUndoButtonStyle = {};
+        let transactionRedoButtonStyle = {};
+        if(!this.props.hasUndo){
+            transactionUndoButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
+        if(!this.props.hasRedo){
+            transactionRedoButtonStyle = {
+                pointerEvents: "none",
+                color: "#322d2d"
+            }
+        }
         if(this.props.loadedList){
             addListButtonStyle = {
                 pointerEvents: "none",
@@ -30,6 +46,18 @@ class LeftSidebar extends Component {
                             className="material-icons todo_button"
                             onClick={this.handleAddNewList} 
                             style={addListButtonStyle}
+                        />
+                        <Undo 
+                            id="undo-button" 
+                            className="material-icons" 
+                            style={transactionUndoButtonStyle}
+                            onClick={this.props.undoTransaction}
+                        />
+                        <Redo 
+                            id="redo-button" 
+                            className="material-icons" 
+                            style={transactionRedoButtonStyle}
+                            onClick={this.props.redoTransaction}
                         />
                     </span>
                 </div>
