@@ -148,8 +148,10 @@ class App extends Component {
     let newToDoListItem = {
       description: "No Description",
       due_date: "No Date",
-      status: "incomplete"
+      status: "incomplete",
+      id: this.state.nextListItemId
     };
+    this.setState({nextListItemId: this.state.nextListItemId + 1});
     return newToDoListItem;
   }
 
@@ -201,6 +203,21 @@ class App extends Component {
   addNewItemTransaction = () => {
     let transaction = new AddNewItemTransaction(this);
     this.tps.addTransaction(transaction);
+  }
+
+  addItem = (itemId) => {
+      console.log(itemId);
+      let newToDoLists = this.state.toDoLists;
+      let currentList = this.state.currentList;
+      let newItem = this.makeNewToDoListItem();
+      newItem.id = itemId;
+      currentList.items.push(newItem);
+      newToDoLists[0] = currentList;
+      this.setState({
+        toDoLists: newToDoLists,
+        currentList: currentList
+        }, this.afterToDoListsChangeComplete);
+      return newItem;
   }
 
   addNewItem = (newItem) => {
