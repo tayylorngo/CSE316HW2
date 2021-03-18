@@ -206,7 +206,6 @@ class App extends Component {
   }
 
   addItem = (itemId) => {
-      console.log(itemId);
       let newToDoLists = this.state.toDoLists;
       let currentList = this.state.currentList;
       let newItem = this.makeNewToDoListItem();

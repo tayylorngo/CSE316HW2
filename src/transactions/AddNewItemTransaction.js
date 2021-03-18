@@ -19,7 +19,6 @@ export default class AddNewItemTransaction extends jsTPS_Transaction {
     }
 
     undoTransaction() {
-        console.log(this.itemAdded.id);
         this.app.removeItem(this.itemAdded.id);
         this.removedItemId = this.itemAdded.id;
     }
